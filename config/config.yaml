@@ -1,0 +1,660 @@
+# ============================================
+# CLUSTER HEARTBEAT - MAIN CONFIGURATION
+# ============================================
+# AI-powered GPU cluster intelligence system
+# One Signal, Three Outcomes
+# ============================================
+
+# ============================================
+# PROJECT METADATA
+# ============================================
+project:
+  name: "Cluster Heartbeat"
+  version: "1.0.0"
+  description: "AI-powered GPU cluster intelligence system"
+  environment: "production"  # development, staging, production
+  debug: false
+
+# ============================================
+# DATA CONFIGURATION
+# ============================================
+data:
+  # Data sources
+  sources:
+    synthetic:
+      enabled: true
+      num_nodes: 10
+      num_jobs: 100
+      time_steps: 1000
+      seed: 42
+    
+    real:
+      enabled: false
+      dataset: "alibaba_cluster_trace"  # or "google_borg_trace"
+      path: "/data/cluster_trace/"
+      file_pattern: "*.csv"
+      batch_size: 1000
+    
+    prometheus:
+      enabled: false
+      url: "http://prometheus:9090"
+      query_interval: 60  # seconds
+  
+  # Data processing
+  processing:
+    window_size: 300  # seconds (5 minutes)
+    stride: 60  # seconds (1 minute)
+    sequence_length: 100
+    batch_size: 64
+    
+    # Sampling
+    sampling_rate: 1.0
+    random_seed: 42
+    
+    # Validation
+    validation_split: 0.2
+    test_split: 0.1
+  
+  # Data storage
+  storage:
+    raw_data_path: "data/raw/"
+    processed_data_path: "data/processed/"
+    cache_path: "data/cache/"
+    feature_path: "data/features/"
+
+# ============================================
+# FEATURE ENGINEERING
+# ============================================
+features:
+  # Metrics to collect
+  metrics:
+    - gpu_utilization
+    - memory_utilization
+    - gpu_temperature
+    - power_consumption
+    - ecc_errors
+    - xid_errors
+    - cpu_usage
+    - ram_usage
+    - network_throughput
+    - disk_io
+    - job_runtime
+    - queue_length
+    - active_processes
+  
+  # Feature extraction
+  extraction:
+    statistical:
+      - mean
+      - std
+      - min
+      - max
+      - median
+      - q25
+      - q75
+      - skew
+      - kurtosis
+    
+    trend:
+      - slope
+      - change_rate
+      - acceleration
+    
+    spectral:
+      - fft_components: 5
+      - dominant_frequency
+    
+    interaction:
+      - correlations
+      - cross_metrics
+  
+  # Normalization
+  normalization:
+    method: "standard"  # standard, robust, minmax, quantile
+    scaling: true
+    centering: true
+  
+  # Feature reduction
+  reduction:
+    enabled: true
+    method: "pca"  # pca, umap, tsne
+    components: 0.95  # 0.95 = 95% variance explained
+    output_dim: 32
+
+# ============================================
+# MODEL CONFIGURATION
+# ============================================
+model:
+  # Fingerprint Autoencoder
+  fingerprint:
+    type: "autoencoder"  # autoencoder, pca, variational_autoencoder
+    
+    # Architecture
+    input_dim: null  # Will be set automatically
+    latent_dim: 32
+    hidden_dims: [64, 128, 64]
+    activation: "relu"
+    dropout_rate: 0.2
+    batch_norm: true
+    
+    # Training
+    learning_rate: 0.001
+    optimizer: "adam"  # adam, sgd, rmsprop
+    weight_decay: 0.00001
+    batch_size: 64
+    epochs: 100
+    early_stopping_patience: 10
+    early_stopping_min_delta: 0.0001
+    validation_frequency: 1
+    
+    # Loss function
+    loss:
+      reconstruction: "mse"  # mse, mae, huber
+      kl_weight: 0.001  # For VAE
+    
+    # Checkpointing
+    checkpoint_dir: "models_checkpoints/"
+    save_best_only: true
+    save_frequency: 10
+  
+  # Anomaly Detection
+  anomaly:
+    # Detection methods
+    methods:
+      - isolation_forest
+      - local_outlier_factor
+      - reconstruction_error
+    
+    # Parameters
+    threshold_percentile: 95
+    contamination: 0.1
+    n_estimators: 100
+    max_samples: 0.8
+    n_neighbors: 20
+    
+    # Scoring
+    score_ensemble: true
+    score_weights:
+      isolation_forest: 0.4
+      local_outlier_factor: 0.3
+      reconstruction_error: 0.3
+  
+  # Prediction Models
+  prediction:
+    horizon: 3600  # seconds (1 hour)
+    sequence_length: 300  # 5 minutes
+    
+    # Failure prediction
+    failure:
+      enabled: true
+      model_type: "lstm"  # lstm, transformer, xgboost
+      time_to_failure: true
+      confidence_interval: 0.95
+    
+    # Resource forecasting
+    forecasting:
+      enabled: true
+      horizon_multiple: 24  # 24 hours
+      confidence_interval: 0.95
+  
+  # Smart Scheduler
+  scheduler:
+    enabled: true
+    resource_weights:
+      gpu: 1.0
+      memory: 0.8
+      cpu: 0.6
+      network: 0.3
+    
+    bin_packing_enabled: true
+    bin_packing_threshold: 0.8
+    
+    # Scheduling policies
+    policies:
+      - resource_fit
+      - workload_compatibility
+      - performance_isolation
+      - failure_awareness
+    
+    # Kubernetes integration
+    kubernetes:
+      enabled: false
+      namespace: "default"
+      scheduler_name: "cluster-heartbeat"
+  
+  # Cost Optimization
+  cost:
+    enabled: true
+    gpu_hourly_rate: 4.0  # USD
+    idle_threshold: 0.1  # 10% utilization
+    detection_window: 600  # seconds (10 minutes)
+    memory_idle_threshold: 0.5  # 50% memory utilization
+    
+    # Alerting
+    alerts:
+      idle_gpu_threshold: 2
+      cost_waste_threshold: 100.0  # USD
+
+# ============================================
+# API CONFIGURATION
+# ============================================
+api:
+  # Server settings
+  host: "0.0.0.0"
+  port: 8000
+  workers: 4
+  debug: false
+  reload: false
+  
+  # Security
+  security:
+    enabled: true
+    secret_key: "${SECRET_KEY:-your-secret-key-here}"
+    algorithm: "HS256"
+    token_expire_minutes: 1440  # 24 hours
+  
+  # CORS
+  cors:
+    allowed_origins:
+      - "*"
+    allowed_methods:
+      - "GET"
+      - "POST"
+      - "PUT"
+      - "DELETE"
+      - "OPTIONS"
+    allowed_headers:
+      - "Content-Type"
+      - "Authorization"
+      - "X-Request-ID"
+    max_age: 3600
+  
+  # Rate limiting
+  rate_limit:
+    enabled: true
+    requests_per_minute: 60
+    burst_multiplier: 2
+  
+  # Documentation
+  docs:
+    enabled: true
+    title: "Cluster Heartbeat API"
+    description: "AI-powered GPU cluster intelligence system"
+    version: "1.0.0"
+    openapi_url: "/openapi.json"
+    docs_url: "/docs"
+    redoc_url: "/redoc"
+
+# ============================================
+# LOGGING CONFIGURATION
+# ============================================
+logging:
+  level: "INFO"  # DEBUG, INFO, WARNING, ERROR, CRITICAL
+  format: "json"  # json, text
+  
+  # Handlers
+  handlers:
+    console:
+      enabled: true
+      level: "INFO"
+      format: "text"
+    
+    file:
+      enabled: true
+      level: "DEBUG"
+      path: "logs/app.log"
+      max_size: 10485760  # 10 MB
+      backup_count: 10
+      format: "json"
+    
+    metrics:
+      enabled: true
+      level: "INFO"
+      path: "logs/metrics.log"
+    
+    audit:
+      enabled: true
+      level: "INFO"
+      path: "logs/audit.log"
+  
+  # Log rotation
+  rotation:
+    when: "midnight"  # midnight, day, hour
+    interval: 1
+    backup_count: 30
+
+# ============================================
+# MONITORING & OBSERVABILITY
+# ============================================
+monitoring:
+  # Metrics
+  metrics:
+    enabled: true
+    prometheus_port: 8001
+    metrics_prefix: "cluster_heartbeat"
+    
+    # Custom metrics
+    custom_metrics:
+      - cluster_health_score
+      - gpu_health_score
+      - failure_risk_score
+      - idle_gpu_count
+      - cost_savings
+  
+  # Health checks
+  health:
+    enabled: true
+    endpoint: "/api/v1/health"
+    liveness_endpoint: "/api/v1/health/liveness"
+    readiness_endpoint: "/api/v1/health/readiness"
+    
+    checks:
+      - data_ingestion
+      - models
+      - api
+      - database
+      - prometheus
+  
+  # Tracing
+  tracing:
+    enabled: false
+    provider: "jaeger"
+    service_name: "cluster-heartbeat"
+    sampling_rate: 0.1
+
+# ============================================
+# DATABASE CONFIGURATION
+# ============================================
+database:
+  # PostgreSQL (for production)
+  postgres:
+    enabled: false
+    host: "localhost"
+    port: 5432
+    database: "cluster_heartbeat"
+    username: "postgres"
+    password: "${DB_PASSWORD:-changeme}"
+    pool_size: 10
+    timeout: 30
+  
+  # Redis (for caching)
+  redis:
+    enabled: false
+    host: "localhost"
+    port: 6379
+    password: "${REDIS_PASSWORD:-}"
+    db: 0
+    pool_size: 10
+    timeout: 5
+    cache_ttl: 300  # seconds
+
+# ============================================
+# INTEGRATIONS
+# ============================================
+integrations:
+  # Prometheus
+  prometheus:
+    enabled: true
+    url: "http://prometheus:9090"
+    timeout: 30
+    verify_ssl: false
+  
+  # NVIDIA DCGM
+  dcgm:
+    enabled: true
+    host: "dcgm-exporter"
+    port: 9400
+    metrics_path: "/metrics"
+    collection_interval: 5  # seconds
+  
+  # Kubernetes
+  kubernetes:
+    enabled: false
+    api_server: "https://kubernetes.default.svc"
+    token: "${K8S_TOKEN:-}"
+    verify_ssl: true
+    namespace: "default"
+    config_path: "~/.kube/config"
+  
+  # Slack (for alerts)
+  slack:
+    enabled: false
+    webhook_url: "${SLACK_WEBHOOK:-}"
+    channel: "#cluster-heartbeat-alerts"
+    username: "Cluster Heartbeat"
+  
+  # Email (for alerts)
+  email:
+    enabled: false
+    smtp_host: "smtp.gmail.com"
+    smtp_port: 587
+    username: "${EMAIL_USER:-}"
+    password: "${EMAIL_PASSWORD:-}"
+    from: "alert@cluster-heartbeat.com"
+    to:
+      - "admin@example.com"
+
+# ============================================
+# ALERTING CONFIGURATION
+# ============================================
+alerting:
+  enabled: true
+  
+  # Alert conditions
+  conditions:
+    - name: "high_gpu_temperature"
+      metric: "gpu_temperature"
+      threshold: 80
+      operator: ">"
+      duration: "5m"
+      severity: "critical"
+      
+    - name: "low_cluster_health"
+      metric: "cluster_health_score"
+      threshold: 70
+      operator: "<"
+      duration: "5m"
+      severity: "warning"
+      
+    - name: "idle_gpu_detected"
+      metric: "idle_gpu_count"
+      threshold: 2
+      operator: ">"
+      duration: "10m"
+      severity: "warning"
+      
+    - name: "high_failure_risk"
+      metric: "failure_risk_score"
+      threshold: 0.8
+      operator: ">"
+      duration: "2m"
+      severity: "critical"
+  
+  # Alert policies
+  policies:
+    notification_channels:
+      - slack
+      - email
+    grouping:
+      enabled: true
+      timeout: "30s"
+    silencing:
+      enabled: true
+      duration: "1h"
+
+# ============================================
+# PERFORMANCE CONFIGURATION
+# ============================================
+performance:
+  # Parallel processing
+  parallelism:
+    enabled: true
+    max_workers: 4
+  
+  # Batch processing
+  batch:
+    enabled: true
+    size: 1000
+    
+  # Caching
+  cache:
+    enabled: true
+    ttl: 300  # seconds
+    max_size: 1000  # items
+  
+  # Async processing
+  async:
+    enabled: true
+    queue_size: 100
+    max_workers: 2
+
+# ============================================
+# DEVELOPMENT CONFIGURATION
+# ============================================
+development:
+  enabled: false
+  
+  # Hot reload
+  reload: false
+  
+  # Test data
+  test_data:
+    enabled: true
+    size: 1000
+    random_seed: 42
+  
+  # Mock services
+  mock:
+    enabled: false
+    services:
+      - prometheus
+      - dcgm
+      - kubernetes
+
+# ============================================
+# DEPLOYMENT CONFIGURATION
+# ============================================
+deployment:
+  # Docker
+  docker:
+    enabled: true
+    image: "cluster-heartbeat"
+    tag: "latest"
+    
+  # Kubernetes
+  kubernetes:
+    enabled: false
+    replicas: 3
+    resources:
+      requests:
+        cpu: "1000m"
+        memory: "2Gi"
+      limits:
+        cpu: "2000m"
+        memory: "4Gi"
+    
+    # Service
+    service:
+      type: "ClusterIP"
+      port: 8000
+      target_port: 8000
+    
+    # Ingress
+    ingress:
+      enabled: false
+      host: "cluster-heartbeat.example.com"
+      tls: true
+  
+  # Health checks
+  health_checks:
+    liveness:
+      path: "/api/v1/health/liveness"
+      initial_delay: 30
+      period: 10
+    readiness:
+      path: "/api/v1/health/readiness"
+      initial_delay: 5
+      period: 5
+
+# ============================================
+# FEATURE FLAGS
+# ============================================
+features:
+  # Core features
+  predictive_ops: true
+  smart_scheduling: true
+  cost_optimization: true
+  
+  # Additional features
+  auto_scaling: false
+  multi_cluster: false
+  federated_learning: false
+  
+  # Experimental features
+  experimental:
+    transformer_based: false
+    reinforcement_learning: false
+    graph_neural_network: false
+
+# ============================================
+# SECURITY CONFIGURATION
+# ============================================
+security:
+  # Encryption
+  encryption:
+    enabled: true
+    algorithm: "AES-256-GCM"
+    key_rotation_days: 30
+  
+  # Authentication
+  auth:
+    enabled: false
+    provider: "jwt"  # jwt, oauth2, ldap
+    jwt_secret: "${JWT_SECRET:-}"
+    oauth2_client_id: "${OAUTH2_CLIENT_ID:-}"
+    oauth2_client_secret: "${OAUTH2_CLIENT_SECRET:-}"
+  
+  # Authorization
+  authorization:
+    enabled: false
+    roles:
+      - admin
+      - viewer
+      - editor
+    
+    permissions:
+      - read:metrics
+      - read:alerts
+      - write:config
+      - write:schedule
+  
+  # SSL/TLS
+  ssl:
+    enabled: false
+    cert_path: "/etc/ssl/certs/cluster-heartbeat.pem"
+    key_path: "/etc/ssl/private/cluster-heartbeat-key.pem"
+
+# ============================================
+# CUSTOM CONFIGURATION
+# ============================================
+custom:
+  # Team-specific configuration
+  team:
+    name: "Slow Walker"
+    mentor: "Md. Adib Hossain"
+    members:
+      - "Nahid Ibn Zaman"
+      - "Farhan Ishraq Ifti"
+      - "Tahmid Rashid Pranjol"
+  
+  # Hackathon specific
+  hackathon:
+    track: "AI for Cluster Intelligence"
+    phase: 1
+    submission_date: "2026-07-02"
+  
+  # Additional settings
+  settings:
+    heartbeat_interval: 60  # seconds
+    data_retention_days: 30
+    max_fingerprint_age: 3600  # seconds

@@ -1,0 +1,87 @@
+# ============================================
+# MODEL HYPERPARAMETERS
+# ============================================
+
+fingerprint_autoencoder:
+  # Layer configurations
+  layers:
+    encoder:
+      - type: linear
+        units: 64
+        activation: relu
+        batch_norm: true
+        dropout: 0.2
+      - type: linear
+        units: 128
+        activation: relu
+        batch_norm: true
+        dropout: 0.2
+      - type: linear
+        units: 32
+        activation: relu
+    
+    decoder:
+      - type: linear
+        units: 128
+        activation: relu
+        batch_norm: true
+        dropout: 0.2
+      - type: linear
+        units: 64
+        activation: relu
+        batch_norm: true
+        dropout: 0.2
+      - type: linear
+        units: input_dim
+        activation: sigmoid
+
+  training:
+    optimizer:
+      name: adam
+      learning_rate: 0.001
+      beta1: 0.9
+      beta2: 0.999
+      epsilon: 1e-8
+      weight_decay: 1e-5
+    
+    scheduler:
+      name: reduce_on_plateau
+      factor: 0.5
+      patience: 5
+      min_lr: 1e-7
+    
+    early_stopping:
+      patience: 10
+      min_delta: 0.0001
+
+anomaly_detection:
+  isolation_forest:
+    n_estimators: 100
+    max_samples: 0.8
+    contamination: 0.1
+    random_state: 42
+  
+  local_outlier_factor:
+    n_neighbors: 20
+    contamination: 0.1
+    novelty: true
+  
+  reconstruction_error:
+    threshold_percentile: 95
+
+scheduler:
+  resource_weights:
+    gpu: 1.0
+    memory: 0.8
+    cpu: 0.6
+    network: 0.3
+  
+  bin_packing:
+    enabled: true
+    threshold: 0.8
+  
+  scheduling_policies:
+    - resource_fit
+    - workload_compatibility
+    - performance_isolation
+    - failure_awareness
