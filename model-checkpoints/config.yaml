@@ -1,0 +1,111 @@
+# ============================================
+# TRAINING CONFIGURATION
+# Generated from: config/config.yaml
+# Training date: 2026-07-03
+# ============================================
+
+project:
+  name: "Cluster Heartbeat"
+  version: "1.0.0"
+  description: "AI-powered GPU cluster intelligence system"
+  environment: "production"
+  debug: false
+
+data:
+  synthetic:
+    enabled: true
+    num_nodes: 10
+    num_jobs: 100
+    time_steps: 1000
+    seed: 42
+  processing:
+    window_size: 300
+    stride: 60
+    batch_size: 64
+    validation_split: 0.2
+    test_split: 0.1
+
+features:
+  metrics:
+    - gpu_utilization
+    - memory_utilization
+    - gpu_temperature
+    - power_consumption
+    - ecc_errors
+    - xid_errors
+    - cpu_usage
+    - ram_usage
+    - network_throughput
+    - disk_io
+    - job_runtime
+    - queue_length
+    - active_processes
+  normalization:
+    method: "standard"
+  reduction:
+    enabled: true
+    method: "pca"
+    components: 0.95
+    output_dim: 32
+
+model:
+  fingerprint:
+    type: "autoencoder"
+    input_dim: 128
+    latent_dim: 32
+    hidden_dims: [64, 128, 64]
+    activation: "relu"
+    dropout_rate: 0.2
+    batch_norm: true
+    learning_rate: 0.001
+    optimizer: "adam"
+    weight_decay: 0.00001
+    batch_size: 64
+    epochs: 100
+    early_stopping_patience: 10
+    checkpoint_dir: "models_checkpoints/"
+    save_best_only: true
+    loss:
+      reconstruction: "mse"
+  anomaly:
+    threshold_percentile: 95
+    contamination: 0.1
+    n_estimators: 100
+    max_samples: 0.8
+    n_neighbors: 20
+    score_ensemble: true
+  scheduler:
+    enabled: true
+    resource_weights:
+      gpu: 1.0
+      memory: 0.8
+      cpu: 0.6
+    bin_packing_enabled: true
+  cost:
+    enabled: true
+    gpu_hourly_rate: 4.0
+    idle_threshold: 0.1
+    detection_window: 600
+
+api:
+  host: "0.0.0.0"
+  port: 8000
+  workers: 4
+
+logging:
+  level: "INFO"
+  format: "json"
+
+training_metadata:
+  timestamp: "2026-07-03T10:00:00"
+  training_time_seconds: 120.5
+  best_val_loss: 0.012345
+  best_epoch: 45
+  input_dim: 128
+  latent_dim: 32
+  anomaly_threshold: 0.5678
+  test_anomaly_rate: 0.05
+  total_samples: 10000
+  train_samples: 7000
+  val_samples: 1500
+  test_samples: 1500

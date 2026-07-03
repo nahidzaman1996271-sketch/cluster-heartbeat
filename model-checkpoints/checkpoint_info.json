@@ -1,0 +1,44 @@
+{
+  "version": "1.0.0",
+  "created": "2026-07-03T10:00:00",
+  "files": {
+    "fingerprint_model.pt": {
+      "type": "pytorch_checkpoint",
+      "size_mb": 12.5,
+      "description": "Fingerprint autoencoder weights",
+      "input_dim": 128,
+      "latent_dim": 32,
+      "hidden_dims": [64, 128, 64],
+      "best_val_loss": 0.012345,
+      "best_epoch": 45
+    },
+    "anomaly_detector.pkl": {
+      "type": "pickle",
+      "size_mb": 5.2,
+      "description": "Anomaly detector model",
+      "threshold": 0.5678,
+      "contamination": 0.1,
+      "n_estimators": 100
+    },
+    "normalizer.pkl": {
+      "type": "pickle",
+      "size_mb": 0.8,
+      "description": "Feature normalizer",
+      "method": "standard",
+      "n_features": 128
+    },
+    "config.yaml": {
+      "type": "yaml",
+      "size_mb": 0.01,
+      "description": "Training configuration"
+    }
+  },
+  "training_stats": {
+    "total_samples": 10000,
+    "train_samples": 7000,
+    "val_samples": 1500,
+    "test_samples": 1500,
+    "training_time_seconds": 120.5,
+    "test_anomaly_rate": 0.05
+  }
+}
