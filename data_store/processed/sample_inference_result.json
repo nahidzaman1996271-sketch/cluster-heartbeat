@@ -1,0 +1,397 @@
+{
+  "status": "ok",
+  "cluster_health_score": 82.3,
+  "num_gpus": 32,
+  "gpus": [
+    {
+      "gpu_id": "gpu-000",
+      "as_of": "2026-01-07 23:59:00",
+      "gpu_health_score": 82.74,
+      "failure_risk_score": 0.1726,
+      "risk_tier": "low",
+      "estimated_time_to_failure_steps": 413.7,
+      "anomaly_score": 0.1973,
+      "gpu_util_mean": 51.45,
+      "gpu_temp_max": 72.55
+    },
+    {
+      "gpu_id": "gpu-001",
+      "as_of": "2026-01-07 23:59:00",
+      "gpu_health_score": 78.88,
+      "failure_risk_score": 0.2112,
+      "risk_tier": "low",
+      "estimated_time_to_failure_steps": 394.4,
+      "anomaly_score": 0.3328,
+      "gpu_util_mean": 54.43,
+      "gpu_temp_max": 74.02
+    },
+    {
+      "gpu_id": "gpu-002",
+      "as_of": "2026-01-07 23:59:00",
+      "gpu_health_score": 87.65,
+      "failure_risk_score": 0.1235,
+      "risk_tier": "low",
+      "estimated_time_to_failure_steps": 438.2,
+      "anomaly_score": 0.0895,
+      "gpu_util_mean": 53.35,
+      "gpu_temp_max": 73.15
+    },
+    {
+      "gpu_id": "gpu-003",
+      "as_of": "2026-01-07 23:59:00",
+      "gpu_health_score": 87.07,
+      "failure_risk_score": 0.1293,
+      "risk_tier": "low",
+      "estimated_time_to_failure_steps": 435.4,
+      "anomaly_score": 0.1389,
+      "gpu_util_mean": 53.05,
+      "gpu_temp_max": 73.88
+    },
+    {
+      "gpu_id": "gpu-004",
+      "as_of": "2026-01-07 23:59:00",
+      "gpu_health_score": 88.31,
+      "failure_risk_score": 0.1169,
+      "risk_tier": "low",
+      "estimated_time_to_failure_steps": 441.5,
+      "anomaly_score": 0.0441,
+      "gpu_util_mean": 55.79,
+      "gpu_temp_max": 73.17
+    },
+    {
+      "gpu_id": "gpu-005",
+      "as_of": "2026-01-07 23:59:00",
+      "gpu_health_score": 86.81,
+      "failure_risk_score": 0.1319,
+      "risk_tier": "low",
+      "estimated_time_to_failure_steps": 434.1,
+      "anomaly_score": 0.1252,
+      "gpu_util_mean": 56.98,
+      "gpu_temp_max": 74.49
+    },
+    {
+      "gpu_id": "gpu-006",
+      "as_of": "2026-01-07 23:59:00",
+      "gpu_health_score": 84.84,
+      "failure_risk_score": 0.1516,
+      "risk_tier": "low",
+      "estimated_time_to_failure_steps": 424.2,
+      "anomaly_score": 0.1385,
+      "gpu_util_mean": 55.03,
+      "gpu_temp_max": 74.33
+    },
+    {
+      "gpu_id": "gpu-007",
+      "as_of": "2026-01-07 23:59:00",
+      "gpu_health_score": 73.04,
+      "failure_risk_score": 0.2696,
+      "risk_tier": "low",
+      "estimated_time_to_failure_steps": 365.2,
+      "anomaly_score": 0.3955,
+      "gpu_util_mean": 54.28,
+      "gpu_temp_max": 76.54
+    },
+    {
+      "gpu_id": "gpu-008",
+      "as_of": "2026-01-07 23:59:00",
+      "gpu_health_score": 83.67,
+      "failure_risk_score": 0.1633,
+      "risk_tier": "low",
+      "estimated_time_to_failure_steps": 418.4,
+      "anomaly_score": 0.1627,
+      "gpu_util_mean": 54.77,
+      "gpu_temp_max": 73.85
+    },
+    {
+      "gpu_id": "gpu-009",
+      "as_of": "2026-01-07 23:59:00",
+      "gpu_health_score": 31.89,
+      "failure_risk_score": 0.6811,
+      "risk_tier": "high",
+      "estimated_time_to_failure_steps": 159.4,
+      "anomaly_score": 0.6245,
+      "gpu_util_mean": 11.04,
+      "gpu_temp_max": 110.0
+    },
+    {
+      "gpu_id": "gpu-010",
+      "as_of": "2026-01-07 23:59:00",
+      "gpu_health_score": 86.26,
+      "failure_risk_score": 0.1374,
+      "risk_tier": "low",
+      "estimated_time_to_failure_steps": 431.3,
+      "anomaly_score": 0.0749,
+      "gpu_util_mean": 56.52,
+      "gpu_temp_max": 75.05
+    },
+    {
+      "gpu_id": "gpu-011",
+      "as_of": "2026-01-07 23:59:00",
+      "gpu_health_score": 85.88,
+      "failure_risk_score": 0.1412,
+      "risk_tier": "low",
+      "estimated_time_to_failure_steps": 429.4,
+      "anomaly_score": 0.1439,
+      "gpu_util_mean": 51.97,
+      "gpu_temp_max": 72.19
+    },
+    {
+      "gpu_id": "gpu-012",
+      "as_of": "2026-01-07 23:59:00",
+      "gpu_health_score": 79.68,
+      "failure_risk_score": 0.2032,
+      "risk_tier": "low",
+      "estimated_time_to_failure_steps": 398.4,
+      "anomaly_score": 0.2516,
+      "gpu_util_mean": 53.68,
+      "gpu_temp_max": 74.76
+    },
+    {
+      "gpu_id": "gpu-013",
+      "as_of": "2026-01-07 23:59:00",
+      "gpu_health_score": 80.94,
+      "failure_risk_score": 0.1906,
+      "risk_tier": "low",
+      "estimated_time_to_failure_steps": 404.7,
+      "anomaly_score": 0.2905,
+      "gpu_util_mean": 55.53,
+      "gpu_temp_max": 74.33
+    },
+    {
+      "gpu_id": "gpu-014",
+      "as_of": "2026-01-07 23:59:00",
+      "gpu_health_score": 86.93,
+      "failure_risk_score": 0.1307,
+      "risk_tier": "low",
+      "estimated_time_to_failure_steps": 434.6,
+      "anomaly_score": 0.0337,
+      "gpu_util_mean": 55.8,
+      "gpu_temp_max": 75.52
+    },
+    {
+      "gpu_id": "gpu-015",
+      "as_of": "2026-01-07 23:59:00",
+      "gpu_health_score": 81.03,
+      "failure_risk_score": 0.1897,
+      "risk_tier": "low",
+      "estimated_time_to_failure_steps": 405.1,
+      "anomaly_score": 0.1836,
+      "gpu_util_mean": 52.96,
+      "gpu_temp_max": 75.18
+    },
+    {
+      "gpu_id": "gpu-016",
+      "as_of": "2026-01-07 23:59:00",
+      "gpu_health_score": 90.78,
+      "failure_risk_score": 0.0922,
+      "risk_tier": "low",
+      "estimated_time_to_failure_steps": 453.9,
+      "anomaly_score": 0.0704,
+      "gpu_util_mean": 49.19,
+      "gpu_temp_max": 69.14
+    },
+    {
+      "gpu_id": "gpu-017",
+      "as_of": "2026-01-07 23:59:00",
+      "gpu_health_score": 88.16,
+      "failure_risk_score": 0.1184,
+      "risk_tier": "low",
+      "estimated_time_to_failure_steps": 440.8,
+      "anomaly_score": 0.1131,
+      "gpu_util_mean": 50.89,
+      "gpu_temp_max": 70.03
+    },
+    {
+      "gpu_id": "gpu-018",
+      "as_of": "2026-01-07 23:59:00",
+      "gpu_health_score": 81.09,
+      "failure_risk_score": 0.1891,
+      "risk_tier": "low",
+      "estimated_time_to_failure_steps": 405.5,
+      "anomaly_score": 0.2955,
+      "gpu_util_mean": 52.64,
+      "gpu_temp_max": 73.74
+    },
+    {
+      "gpu_id": "gpu-019",
+      "as_of": "2026-01-07 23:59:00",
+      "gpu_health_score": 92.7,
+      "failure_risk_score": 0.073,
+      "risk_tier": "low",
+      "estimated_time_to_failure_steps": 463.5,
+      "anomaly_score": 0.0001,
+      "gpu_util_mean": 52.77,
+      "gpu_temp_max": 69.9
+    },
+    {
+      "gpu_id": "gpu-020",
+      "as_of": "2026-01-07 23:59:00",
+      "gpu_health_score": 88.14,
+      "failure_risk_score": 0.1186,
+      "risk_tier": "low",
+      "estimated_time_to_failure_steps": 440.7,
+      "anomaly_score": 0.0693,
+      "gpu_util_mean": 54.83,
+      "gpu_temp_max": 72.04
+    },
+    {
+      "gpu_id": "gpu-021",
+      "as_of": "2026-01-07 23:59:00",
+      "gpu_health_score": 70.05,
+      "failure_risk_score": 0.2995,
+      "risk_tier": "low",
+      "estimated_time_to_failure_steps": 350.2,
+      "anomaly_score": 0.4244,
+      "gpu_util_mean": 53.02,
+      "gpu_temp_max": 80.47
+    },
+    {
+      "gpu_id": "gpu-022",
+      "as_of": "2026-01-07 23:59:00",
+      "gpu_health_score": 90.54,
+      "failure_risk_score": 0.0946,
+      "risk_tier": "low",
+      "estimated_time_to_failure_steps": 452.7,
+      "anomaly_score": 0.0543,
+      "gpu_util_mean": 55.2,
+      "gpu_temp_max": 70.96
+    },
+    {
+      "gpu_id": "gpu-023",
+      "as_of": "2026-01-07 23:59:00",
+      "gpu_health_score": 82.49,
+      "failure_risk_score": 0.1751,
+      "risk_tier": "low",
+      "estimated_time_to_failure_steps": 412.4,
+      "anomaly_score": 0.2429,
+      "gpu_util_mean": 53.22,
+      "gpu_temp_max": 70.93
+    },
+    {
+      "gpu_id": "gpu-024",
+      "as_of": "2026-01-07 23:59:00",
+      "gpu_health_score": 75.85,
+      "failure_risk_score": 0.2415,
+      "risk_tier": "low",
+      "estimated_time_to_failure_steps": 379.2,
+      "anomaly_score": 0.4415,
+      "gpu_util_mean": 56.69,
+      "gpu_temp_max": 73.26
+    },
+    {
+      "gpu_id": "gpu-025",
+      "as_of": "2026-01-07 23:59:00",
+      "gpu_health_score": 82.07,
+      "failure_risk_score": 0.1793,
+      "risk_tier": "low",
+      "estimated_time_to_failure_steps": 410.3,
+      "anomaly_score": 0.2711,
+      "gpu_util_mean": 50.07,
+      "gpu_temp_max": 71.64
+    },
+    {
+      "gpu_id": "gpu-026",
+      "as_of": "2026-01-07 23:59:00",
+      "gpu_health_score": 87.11,
+      "failure_risk_score": 0.1289,
+      "risk_tier": "low",
+      "estimated_time_to_failure_steps": 435.5,
+      "anomaly_score": 0.2172,
+      "gpu_util_mean": 54.91,
+      "gpu_temp_max": 70.31
+    },
+    {
+      "gpu_id": "gpu-027",
+      "as_of": "2026-01-07 23:59:00",
+      "gpu_health_score": 79.11,
+      "failure_risk_score": 0.2089,
+      "risk_tier": "low",
+      "estimated_time_to_failure_steps": 395.5,
+      "anomaly_score": 0.3005,
+      "gpu_util_mean": 53.12,
+      "gpu_temp_max": 75.1
+    },
+    {
+      "gpu_id": "gpu-028",
+      "as_of": "2026-01-07 23:59:00",
+      "gpu_health_score": 89.09,
+      "failure_risk_score": 0.1091,
+      "risk_tier": "low",
+      "estimated_time_to_failure_steps": 445.5,
+      "anomaly_score": 0.1353,
+      "gpu_util_mean": 55.96,
+      "gpu_temp_max": 71.08
+    },
+    {
+      "gpu_id": "gpu-029",
+      "as_of": "2026-01-07 23:59:00",
+      "gpu_health_score": 79.05,
+      "failure_risk_score": 0.2095,
+      "risk_tier": "low",
+      "estimated_time_to_failure_steps": 395.2,
+      "anomaly_score": 0.2991,
+      "gpu_util_mean": 53.52,
+      "gpu_temp_max": 74.32
+    },
+    {
+      "gpu_id": "gpu-030",
+      "as_of": "2026-01-07 23:59:00",
+      "gpu_health_score": 82.45,
+      "failure_risk_score": 0.1755,
+      "risk_tier": "low",
+      "estimated_time_to_failure_steps": 412.2,
+      "anomaly_score": 0.1948,
+      "gpu_util_mean": 58.6,
+      "gpu_temp_max": 75.17
+    },
+    {
+      "gpu_id": "gpu-031",
+      "as_of": "2026-01-07 23:59:00",
+      "gpu_health_score": 89.3,
+      "failure_risk_score": 0.107,
+      "risk_tier": "low",
+      "estimated_time_to_failure_steps": 446.5,
+      "anomaly_score": 0.0685,
+      "gpu_util_mean": 53.1,
+      "gpu_temp_max": 72.55
+    }
+  ],
+  "scheduling_recommendations": [
+    {
+      "gpu_id": "gpu-016",
+      "schedule_score": 0.7838,
+      "reason": "high health score, low failure risk"
+    },
+    {
+      "gpu_id": "gpu-031",
+      "schedule_score": 0.7589,
+      "reason": "high health score, low failure risk"
+    },
+    {
+      "gpu_id": "gpu-022",
+      "schedule_score": 0.7584,
+      "reason": "high health score, low failure risk"
+    },
+    {
+      "gpu_id": "gpu-019",
+      "schedule_score": 0.7584,
+      "reason": "high health score, low failure risk"
+    },
+    {
+      "gpu_id": "gpu-028",
+      "schedule_score": 0.7501,
+      "reason": "high health score, low failure risk"
+    }
+  ],
+  "gpus_recommended_for_drain": [
+    "gpu-009"
+  ],
+  "cost_optimization": {
+    "num_idle_gpus": 0,
+    "total_gpus": 32,
+    "idle_fraction": 0.0,
+    "estimated_savings_usd_per_window": 0.0,
+    "window_hours": 1.0,
+    "recommendations": []
+  }
+}

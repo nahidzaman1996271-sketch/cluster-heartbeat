@@ -1,0 +1,160 @@
+2026-07-14 08:07:38 | INFO     | cluster_heartbeat.test | logger works
+2026-07-14 08:08:06 | INFO     | cluster_heartbeat.synthetic_generator | Generating synthetic trace: 32 GPUs x 10080 steps (7d @ 60s), failure_rate=0.03
+2026-07-14 08:08:06 | DEBUG    | cluster_heartbeat.synthetic_generator | GPU gpu-009: injected failure ramp starting at step 7757
+2026-07-14 08:08:06 | INFO     | cluster_heartbeat.synthetic_generator | Generated 322560 rows across 32 GPUs
+2026-07-14 08:08:20 | INFO     | cluster_heartbeat.synthetic_generator | Generating synthetic trace: 32 GPUs x 10080 steps (7d @ 60s), failure_rate=0.03
+2026-07-14 08:08:20 | DEBUG    | cluster_heartbeat.synthetic_generator | GPU gpu-009: injected failure ramp starting at step 7757
+2026-07-14 08:08:21 | INFO     | cluster_heartbeat.synthetic_generator | Generated 322560 rows across 32 GPUs
+2026-07-14 08:08:25 | INFO     | cluster_heartbeat.synthetic_generator | Saved synthetic trace to /home/claude/cluster-heartbeat/data_store/raw/synthetic_trace.csv
+2026-07-14 08:08:47 | INFO     | cluster_heartbeat.ingestion | Loaded 322560 rows from /home/claude/cluster-heartbeat/data_store/raw/synthetic_trace.csv
+2026-07-14 08:09:10 | INFO     | cluster_heartbeat.ingestion | Loaded 322560 rows from /home/claude/cluster-heartbeat/data_store/raw/synthetic_trace.csv
+2026-07-14 08:09:10 | INFO     | cluster_heartbeat.preprocessing | Preprocessing 322560 raw rows
+2026-07-14 08:09:10 | DEBUG    | cluster_heartbeat.preprocessing | GPU gpu-000: interpolated 6 missing values
+2026-07-14 08:09:11 | INFO     | cluster_heartbeat.preprocessing | Preprocessing complete: 322560 clean rows
+2026-07-14 08:09:32 | INFO     | cluster_heartbeat.ingestion | Loaded 322560 rows from /home/claude/cluster-heartbeat/data_store/processed/clean_trace.csv
+2026-07-14 08:09:32 | INFO     | cluster_heartbeat.windowing | Generated 64352 windows (size=30, stride=5) from 32 GPUs
+2026-07-14 08:09:47 | INFO     | cluster_heartbeat.ingestion | Loaded 322560 rows from /home/claude/cluster-heartbeat/data_store/processed/clean_trace.csv
+2026-07-14 08:09:47 | INFO     | cluster_heartbeat.windowing | Generated 64352 windows (size=30, stride=5) from 32 GPUs
+2026-07-14 08:09:49 | INFO     | cluster_heartbeat.normalization | Fit StandardScaler on 64352 windows (1930560 timesteps, 13 features)
+2026-07-14 08:09:49 | INFO     | cluster_heartbeat.normalization | Saved scaler to /home/claude/cluster-heartbeat/checkpoints/feature_scaler.pkl
+2026-07-14 08:09:49 | INFO     | cluster_heartbeat.normalization | Loaded scaler from /home/claude/cluster-heartbeat/checkpoints/feature_scaler.pkl
+2026-07-14 08:10:10 | INFO     | cluster_heartbeat.ingestion | Loaded 322560 rows from /home/claude/cluster-heartbeat/data_store/processed/clean_trace.csv
+2026-07-14 08:10:10 | INFO     | cluster_heartbeat.windowing | Generated 64352 windows (size=30, stride=5) from 32 GPUs
+2026-07-14 08:10:11 | INFO     | cluster_heartbeat.normalization | Fit StandardScaler on 64352 windows (1930560 timesteps, 13 features)
+2026-07-14 08:10:11 | INFO     | cluster_heartbeat.pca_embedding | Fit PCA with 8 components, explained variance ratio = 0.523
+2026-07-14 08:10:12 | INFO     | cluster_heartbeat.pca_embedding | Saved PCA embedder to /home/claude/cluster-heartbeat/checkpoints/pca_embedding.pkl
+2026-07-14 08:10:25 | INFO     | cluster_heartbeat.ingestion | Loaded 322560 rows from /home/claude/cluster-heartbeat/data_store/processed/clean_trace.csv
+2026-07-14 08:10:25 | INFO     | cluster_heartbeat.windowing | Generated 64352 windows (size=30, stride=5) from 32 GPUs
+2026-07-14 08:10:26 | INFO     | cluster_heartbeat.normalization | Fit StandardScaler on 64352 windows (1930560 timesteps, 13 features)
+2026-07-14 08:10:26 | INFO     | cluster_heartbeat.pca_embedding | Fit PCA with 8 components, explained variance ratio = 0.523
+2026-07-14 08:10:27 | INFO     | cluster_heartbeat.anomaly_detector | Fit IsolationForest on 64352 embeddings (contamination=0.03)
+2026-07-14 08:10:28 | INFO     | cluster_heartbeat.anomaly_detector | Saved anomaly detector to /home/claude/cluster-heartbeat/checkpoints/anomaly_detector.pkl
+2026-07-14 08:11:58 | INFO     | cluster_heartbeat.ingestion | Loaded 322560 rows from /home/claude/cluster-heartbeat/data_store/processed/clean_trace.csv
+2026-07-14 08:11:58 | INFO     | cluster_heartbeat.windowing | Generated 64352 windows (size=30, stride=5) from 32 GPUs
+2026-07-14 08:11:58 | INFO     | cluster_heartbeat.normalization | Loaded scaler from /home/claude/cluster-heartbeat/checkpoints/feature_scaler.pkl
+2026-07-14 08:11:59 | INFO     | cluster_heartbeat.scheduler | Generated 3 scheduling recommendations
+2026-07-14 08:11:59 | INFO     | cluster_heartbeat.cost_optimizer | Detected 0 idle GPUs (util < 5.0%)
+2026-07-14 08:11:59 | INFO     | cluster_heartbeat.cost_optimizer | Cost optimization: 0/32 idle GPUs, est. savings $0.00/window
+2026-07-14 08:12:21 | INFO     | cluster_heartbeat.ingestion | Loaded 322560 rows from /home/claude/cluster-heartbeat/data_store/raw/synthetic_trace.csv
+2026-07-14 08:12:21 | INFO     | cluster_heartbeat.normalization | Loaded scaler from /home/claude/cluster-heartbeat/checkpoints/feature_scaler.pkl
+2026-07-14 08:12:21 | INFO     | cluster_heartbeat.inference_pipeline | ClusterHeartbeatPipeline initialized (all checkpoints loaded)
+2026-07-14 08:12:21 | INFO     | cluster_heartbeat.preprocessing | Preprocessing 322560 raw rows
+2026-07-14 08:12:22 | INFO     | cluster_heartbeat.preprocessing | Preprocessing complete: 322560 clean rows
+2026-07-14 08:12:22 | INFO     | cluster_heartbeat.windowing | Generated 64352 windows (size=30, stride=5) from 32 GPUs
+2026-07-14 08:12:23 | INFO     | cluster_heartbeat.scheduler | Generated 5 scheduling recommendations
+2026-07-14 08:12:23 | WARNING  | cluster_heartbeat.scheduler | Recommending drain for 1 high-risk GPUs: ['gpu-009']
+2026-07-14 08:12:23 | INFO     | cluster_heartbeat.cost_optimizer | Detected 0 idle GPUs (util < 5.0%)
+2026-07-14 08:12:23 | INFO     | cluster_heartbeat.cost_optimizer | Cost optimization: 0/32 idle GPUs, est. savings $0.00/window
+2026-07-14 08:12:41 | INFO     | cluster_heartbeat.ingestion | Loaded 322560 rows from /home/claude/cluster-heartbeat/data_store/raw/synthetic_trace.csv
+2026-07-14 08:13:15 | INFO     | cluster_heartbeat.ingestion | Loaded 322560 rows from /home/claude/cluster-heartbeat/data_store/processed/clean_trace.csv
+2026-07-14 08:13:16 | INFO     | cluster_heartbeat.windowing | Generated 64352 windows (size=30, stride=5) from 32 GPUs
+2026-07-14 08:13:16 | INFO     | cluster_heartbeat.normalization | Fit StandardScaler on 64352 windows (1930560 timesteps, 13 features)
+2026-07-14 08:13:16 | INFO     | cluster_heartbeat.normalization | Saved scaler to /home/claude/cluster-heartbeat/checkpoints/feature_scaler.pkl
+2026-07-14 08:13:16 | INFO     | cluster_heartbeat.pca_embedding | Fit PCA with 8 components, explained variance ratio = 0.523
+2026-07-14 08:13:16 | INFO     | cluster_heartbeat.pca_embedding | Saved PCA embedder to /home/claude/cluster-heartbeat/checkpoints/pca_embedding.pkl
+2026-07-14 08:13:17 | INFO     | cluster_heartbeat.anomaly_detector | Fit IsolationForest on 64352 embeddings (contamination=0.03)
+2026-07-14 08:13:17 | INFO     | cluster_heartbeat.anomaly_detector | Saved anomaly detector to /home/claude/cluster-heartbeat/checkpoints/anomaly_detector.pkl
+2026-07-14 08:13:19 | INFO     | cluster_heartbeat.ingestion | Loaded 322560 rows from /home/claude/cluster-heartbeat/data_store/raw/synthetic_trace.csv
+2026-07-14 08:13:19 | INFO     | cluster_heartbeat.normalization | Loaded scaler from /home/claude/cluster-heartbeat/checkpoints/feature_scaler.pkl
+2026-07-14 08:13:19 | INFO     | cluster_heartbeat.inference_pipeline | ClusterHeartbeatPipeline initialized (all checkpoints loaded)
+2026-07-14 08:13:19 | INFO     | cluster_heartbeat.preprocessing | Preprocessing 322560 raw rows
+2026-07-14 08:13:20 | INFO     | cluster_heartbeat.preprocessing | Preprocessing complete: 322560 clean rows
+2026-07-14 08:13:20 | INFO     | cluster_heartbeat.windowing | Generated 64352 windows (size=30, stride=5) from 32 GPUs
+2026-07-14 08:13:38 | INFO     | cluster_heartbeat.ingestion | Loaded 322560 rows from /home/claude/cluster-heartbeat/data_store/raw/synthetic_trace.csv
+2026-07-14 08:13:38 | INFO     | cluster_heartbeat.normalization | Loaded scaler from /home/claude/cluster-heartbeat/checkpoints/feature_scaler.pkl
+2026-07-14 08:13:38 | INFO     | cluster_heartbeat.inference_pipeline | ClusterHeartbeatPipeline initialized (all checkpoints loaded)
+2026-07-14 08:13:38 | INFO     | cluster_heartbeat.preprocessing | Preprocessing 322560 raw rows
+2026-07-14 08:13:39 | INFO     | cluster_heartbeat.preprocessing | Preprocessing complete: 322560 clean rows
+2026-07-14 08:13:39 | INFO     | cluster_heartbeat.windowing | Generated 64352 windows (size=30, stride=5) from 32 GPUs
+2026-07-14 08:13:40 | INFO     | cluster_heartbeat.scheduler | Generated 5 scheduling recommendations
+2026-07-14 08:13:40 | WARNING  | cluster_heartbeat.scheduler | Recommending drain for 1 high-risk GPUs: ['gpu-009']
+2026-07-14 08:13:40 | INFO     | cluster_heartbeat.cost_optimizer | Detected 0 idle GPUs (util < 5.0%)
+2026-07-14 08:13:40 | INFO     | cluster_heartbeat.cost_optimizer | Cost optimization: 0/32 idle GPUs, est. savings $0.00/window
+2026-07-14 08:13:40 | INFO     | cluster_heartbeat.dashboard_json_builder | Built dashboard payload: 32 GPU panels, 1 alerts
+2026-07-14 08:14:47 | INFO     | cluster_heartbeat.synthetic_generator | Generating synthetic trace: 4 GPUs x 1440 steps (1d @ 60s), failure_rate=0.5
+2026-07-14 08:14:47 | DEBUG    | cluster_heartbeat.synthetic_generator | GPU gpu-001: injected failure ramp starting at step 1128
+2026-07-14 08:14:47 | DEBUG    | cluster_heartbeat.synthetic_generator | GPU gpu-002: injected failure ramp starting at step 1039
+2026-07-14 08:14:47 | DEBUG    | cluster_heartbeat.synthetic_generator | GPU gpu-003: injected failure ramp starting at step 1138
+2026-07-14 08:14:47 | INFO     | cluster_heartbeat.synthetic_generator | Generated 5760 rows across 4 GPUs
+2026-07-14 08:14:47 | INFO     | cluster_heartbeat.preprocessing | Preprocessing 5760 raw rows
+2026-07-14 08:14:47 | DEBUG    | cluster_heartbeat.preprocessing | GPU gpu-000: interpolated 6 missing values
+2026-07-14 08:14:47 | INFO     | cluster_heartbeat.preprocessing | Preprocessing complete: 5760 clean rows
+2026-07-14 08:14:47 | INFO     | cluster_heartbeat.preprocessing | Preprocessing 5760 raw rows
+2026-07-14 08:14:47 | INFO     | cluster_heartbeat.preprocessing | Preprocessing complete: 5760 clean rows
+2026-07-14 08:14:47 | INFO     | cluster_heartbeat.windowing | Generated 1148 windows (size=10, stride=5) from 4 GPUs
+2026-07-14 08:14:47 | INFO     | cluster_heartbeat.normalization | Fit StandardScaler on 1148 windows (11480 timesteps, 13 features)
+2026-07-14 08:14:47 | INFO     | cluster_heartbeat.pca_embedding | Fit PCA with 4 components, explained variance ratio = 0.549
+2026-07-14 08:14:48 | INFO     | cluster_heartbeat.anomaly_detector | Fit IsolationForest on 1148 embeddings (contamination=0.1)
+2026-07-14 08:14:48 | INFO     | cluster_heartbeat.scheduler | Generated 2 scheduling recommendations
+2026-07-14 08:14:48 | WARNING  | cluster_heartbeat.scheduler | Recommending drain for 4 high-risk GPUs: ['gpu-000', 'gpu-001', 'gpu-002', 'gpu-003']
+2026-07-14 08:14:48 | INFO     | cluster_heartbeat.cost_optimizer | Detected 0 idle GPUs (util < 5.0%)
+2026-07-14 08:14:48 | INFO     | cluster_heartbeat.cost_optimizer | Cost optimization: 0/4 idle GPUs, est. savings $0.00/window
+2026-07-14 08:14:48 | INFO     | cluster_heartbeat.normalization | Fit StandardScaler on 1148 windows (11480 timesteps, 13 features)
+2026-07-14 08:14:48 | INFO     | cluster_heartbeat.normalization | Saved scaler to /home/claude/cluster-heartbeat/checkpoints/feature_scaler.pkl
+2026-07-14 08:14:48 | INFO     | cluster_heartbeat.pca_embedding | Fit PCA with 8 components, explained variance ratio = 0.589
+2026-07-14 08:14:48 | INFO     | cluster_heartbeat.pca_embedding | Saved PCA embedder to /home/claude/cluster-heartbeat/checkpoints/pca_embedding.pkl
+2026-07-14 08:14:48 | INFO     | cluster_heartbeat.anomaly_detector | Fit IsolationForest on 1148 embeddings (contamination=0.03)
+2026-07-14 08:14:48 | INFO     | cluster_heartbeat.anomaly_detector | Saved anomaly detector to /home/claude/cluster-heartbeat/checkpoints/anomaly_detector.pkl
+2026-07-14 08:14:48 | INFO     | cluster_heartbeat.normalization | Loaded scaler from /home/claude/cluster-heartbeat/checkpoints/feature_scaler.pkl
+2026-07-14 08:14:48 | INFO     | cluster_heartbeat.inference_pipeline | ClusterHeartbeatPipeline initialized (all checkpoints loaded)
+2026-07-14 08:14:48 | INFO     | cluster_heartbeat.preprocessing | Preprocessing 5760 raw rows
+2026-07-14 08:14:48 | INFO     | cluster_heartbeat.preprocessing | Preprocessing complete: 5760 clean rows
+2026-07-14 08:14:48 | INFO     | cluster_heartbeat.windowing | Generated 1132 windows (size=30, stride=5) from 4 GPUs
+2026-07-14 08:15:02 | INFO     | cluster_heartbeat.synthetic_generator | Generating synthetic trace: 4 GPUs x 2880 steps (2d @ 60s), failure_rate=0.5
+2026-07-14 08:15:02 | DEBUG    | cluster_heartbeat.synthetic_generator | GPU gpu-003: injected failure ramp starting at step 2431
+2026-07-14 08:15:02 | INFO     | cluster_heartbeat.synthetic_generator | Generated 11520 rows across 4 GPUs
+2026-07-14 08:15:02 | INFO     | cluster_heartbeat.preprocessing | Preprocessing 11520 raw rows
+2026-07-14 08:15:02 | INFO     | cluster_heartbeat.preprocessing | Preprocessing complete: 11520 clean rows
+2026-07-14 08:15:02 | INFO     | cluster_heartbeat.windowing | Generated 2284 windows (size=30, stride=5) from 4 GPUs
+2026-07-14 08:15:02 | INFO     | cluster_heartbeat.normalization | Fit StandardScaler on 2284 windows (68520 timesteps, 13 features)
+2026-07-14 08:15:02 | INFO     | cluster_heartbeat.normalization | Saved scaler to /home/claude/cluster-heartbeat/checkpoints/feature_scaler.pkl
+2026-07-14 08:15:02 | INFO     | cluster_heartbeat.pca_embedding | Fit PCA with 8 components, explained variance ratio = 0.534
+2026-07-14 08:15:02 | INFO     | cluster_heartbeat.pca_embedding | Saved PCA embedder to /home/claude/cluster-heartbeat/checkpoints/pca_embedding.pkl
+2026-07-14 08:15:03 | INFO     | cluster_heartbeat.anomaly_detector | Fit IsolationForest on 2284 embeddings (contamination=0.1)
+2026-07-14 08:15:03 | INFO     | cluster_heartbeat.anomaly_detector | Saved anomaly detector to /home/claude/cluster-heartbeat/checkpoints/anomaly_detector.pkl
+2026-07-14 08:15:03 | INFO     | cluster_heartbeat.normalization | Loaded scaler from /home/claude/cluster-heartbeat/checkpoints/feature_scaler.pkl
+2026-07-14 08:15:03 | INFO     | cluster_heartbeat.inference_pipeline | ClusterHeartbeatPipeline initialized (all checkpoints loaded)
+2026-07-14 08:15:03 | INFO     | cluster_heartbeat.preprocessing | Preprocessing 11520 raw rows
+2026-07-14 08:15:03 | INFO     | cluster_heartbeat.preprocessing | Preprocessing complete: 11520 clean rows
+2026-07-14 08:15:03 | INFO     | cluster_heartbeat.windowing | Generated 2284 windows (size=30, stride=5) from 4 GPUs
+2026-07-14 08:15:03 | INFO     | cluster_heartbeat.scheduler | Generated 4 scheduling recommendations
+2026-07-14 08:15:03 | WARNING  | cluster_heartbeat.scheduler | Recommending drain for 1 high-risk GPUs: ['gpu-003']
+2026-07-14 08:15:03 | INFO     | cluster_heartbeat.cost_optimizer | Detected 0 idle GPUs (util < 5.0%)
+2026-07-14 08:15:03 | INFO     | cluster_heartbeat.cost_optimizer | Cost optimization: 0/4 idle GPUs, est. savings $0.00/window
+2026-07-14 08:15:03 | INFO     | cluster_heartbeat.dashboard_json_builder | Built dashboard payload: 4 GPU panels, 1 alerts
+2026-07-14 08:15:03 | INFO     | cluster_heartbeat.preprocessing | Preprocessing 11520 raw rows
+2026-07-14 08:15:03 | INFO     | cluster_heartbeat.preprocessing | Preprocessing complete: 11520 clean rows
+2026-07-14 08:15:03 | INFO     | cluster_heartbeat.windowing | Generated 2284 windows (size=30, stride=5) from 4 GPUs
+2026-07-14 08:15:10 | INFO     | cluster_heartbeat.ingestion | Loaded 322560 rows from /home/claude/cluster-heartbeat/data_store/raw/synthetic_trace.csv
+2026-07-14 08:15:10 | INFO     | cluster_heartbeat.preprocessing | Preprocessing 322560 raw rows
+2026-07-14 08:15:11 | INFO     | cluster_heartbeat.preprocessing | Preprocessing complete: 322560 clean rows
+2026-07-14 08:15:15 | INFO     | cluster_heartbeat.windowing | Generated 64352 windows (size=30, stride=5) from 32 GPUs
+2026-07-14 08:15:16 | INFO     | cluster_heartbeat.normalization | Fit StandardScaler on 64352 windows (1930560 timesteps, 13 features)
+2026-07-14 08:15:16 | INFO     | cluster_heartbeat.normalization | Saved scaler to /home/claude/cluster-heartbeat/checkpoints/feature_scaler.pkl
+2026-07-14 08:15:16 | INFO     | cluster_heartbeat.pca_embedding | Fit PCA with 8 components, explained variance ratio = 0.523
+2026-07-14 08:15:16 | INFO     | cluster_heartbeat.pca_embedding | Saved PCA embedder to /home/claude/cluster-heartbeat/checkpoints/pca_embedding.pkl
+2026-07-14 08:15:17 | INFO     | cluster_heartbeat.anomaly_detector | Fit IsolationForest on 64352 embeddings (contamination=0.03)
+2026-07-14 08:15:17 | INFO     | cluster_heartbeat.anomaly_detector | Saved anomaly detector to /home/claude/cluster-heartbeat/checkpoints/anomaly_detector.pkl
+2026-07-14 15:04:46 | INFO     | cluster_heartbeat.synthetic_generator | Generating synthetic trace: 32 GPUs x 10080 steps (7d @ 60s), failure_rate=0.03
+2026-07-14 15:04:46 | DEBUG    | cluster_heartbeat.synthetic_generator | GPU gpu-009: injected failure ramp starting at step 7757
+2026-07-14 15:04:46 | INFO     | cluster_heartbeat.synthetic_generator | Generated 322560 rows across 32 GPUs
+2026-07-14 15:04:57 | INFO     | cluster_heartbeat.synthetic_generator | Saved synthetic trace to D:\Hackathon things 1st time\using claude\cluster-heartbeat\data_store\raw\synthetic_trace.csv
+2026-07-14 15:05:05 | INFO     | cluster_heartbeat.ingestion | Loaded 322560 rows from D:\Hackathon things 1st time\using claude\cluster-heartbeat\data_store\raw\synthetic_trace.csv
+2026-07-14 15:05:05 | INFO     | cluster_heartbeat.preprocessing | Preprocessing 322560 raw rows
+2026-07-14 15:05:05 | DEBUG    | cluster_heartbeat.preprocessing | GPU gpu-000: interpolated 6 missing values
+2026-07-14 15:05:06 | INFO     | cluster_heartbeat.preprocessing | Preprocessing complete: 322560 clean rows
+2026-07-14 15:12:44 | INFO     | cluster_heartbeat.ingestion | Loaded 322560 rows from D:\Hackathon things 1st time\using claude\cluster-heartbeat\data_store\raw\synthetic_trace.csv
+2026-07-14 15:12:44 | INFO     | cluster_heartbeat.api | Lazily initializing ClusterHeartbeatPipeline
+2026-07-14 15:12:44 | INFO     | cluster_heartbeat.normalization | Loaded scaler from D:\Hackathon things 1st time\using claude\cluster-heartbeat\checkpoints\feature_scaler.pkl
+2026-07-14 15:12:45 | INFO     | cluster_heartbeat.inference_pipeline | ClusterHeartbeatPipeline initialized (all checkpoints loaded)
+2026-07-14 15:12:45 | INFO     | cluster_heartbeat.preprocessing | Preprocessing 322560 raw rows
+2026-07-14 15:12:46 | INFO     | cluster_heartbeat.preprocessing | Preprocessing complete: 322560 clean rows
+2026-07-14 15:12:47 | INFO     | cluster_heartbeat.windowing | Generated 64352 windows (size=30, stride=5) from 32 GPUs
+2026-07-14 15:12:51 | INFO     | cluster_heartbeat.scheduler | Generated 5 scheduling recommendations
+2026-07-14 15:12:51 | WARNING  | cluster_heartbeat.scheduler | Recommending drain for 1 high-risk GPUs: ['gpu-009']
+2026-07-14 15:12:51 | INFO     | cluster_heartbeat.cost_optimizer | Detected 0 idle GPUs (util < 5.0%)
+2026-07-14 15:12:51 | INFO     | cluster_heartbeat.cost_optimizer | Cost optimization: 0/32 idle GPUs, est. savings $0.00/window
+2026-07-14 15:12:51 | INFO     | cluster_heartbeat.preprocessing | Preprocessing 322560 raw rows
+2026-07-14 15:12:53 | INFO     | cluster_heartbeat.preprocessing | Preprocessing complete: 322560 clean rows
+2026-07-14 15:12:54 | INFO     | cluster_heartbeat.windowing | Generated 64352 windows (size=30, stride=5) from 32 GPUs
+2026-07-14 15:12:57 | INFO     | cluster_heartbeat.dashboard_json_builder | Built dashboard payload: 32 GPU panels, 1 alerts
