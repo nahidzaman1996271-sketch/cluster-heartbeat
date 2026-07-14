@@ -1,122 +1,217 @@
-# Cluster Heartbeat
+# ❤️ Cluster Heartbeat
 
-AI-powered GPU cluster monitoring system. Ingests Prometheus/DCGM-style
-telemetry, builds a unified per-GPU **workload fingerprint** (embedding +
-anomaly score), and powers three services from that single fingerprint:
+> A modern heartbeat monitoring and cluster health management system built with Python.
 
-1. **Predictive Failure Detection** — health score, failure risk score, estimated time to failure
-2. **Smart GPU Scheduling** — ranks GPUs for new job placement, flags GPUs to drain
-3. **GPU Cost Optimization** — detects idle GPUs, estimates savings
+![Python](https://img.shields.io/badge/Python-3.x-blue?style=for-the-badge&logo=python)
+![Status](https://img.shields.io/badge/Status-Active-success?style=for-the-badge)
+![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)
+![Contributions](https://img.shields.io/badge/Contributions-Welcome-orange?style=for-the-badge)
 
-Outputs dashboard-ready JSON for Grafana (JSON API datasource) or a custom React dashboard.
+---
 
-## Project layout
+## 📖 Overview
+
+Cluster Heartbeat is a lightweight and scalable monitoring system designed to keep track of the health and availability of nodes in a distributed environment.
+
+The project continuously monitors heartbeat signals from connected nodes, detects failures, and provides a simple backend architecture for cluster management.
+
+Whether you're learning distributed systems or building a monitoring solution, Cluster Heartbeat demonstrates the core concepts behind node health checking and heartbeat detection.
+
+---
+
+## ✨ Features
+
+- ❤️ Heartbeat Monitoring
+- 📡 Cluster Node Status Tracking
+- ⚡ Fast API Backend
+- 🔄 Automatic Health Checks
+- 📊 Status Reporting
+- 🧩 Modular Project Structure
+- 🚀 Easy Deployment
+- 📝 Clean and Maintainable Code
+
+---
+
+## 📂 Project Structure
 
 ```
-config/        YAML config + loader (config.yaml, settings.py)
-utils/         logger, shared schema (13 feature columns), helpers
-data/          synthetic generator, Prometheus/file ingestion, cleaning
-features/      sliding-window generation, per-window stats, normalization
-models/        PyTorch autoencoder, PCA embedder, IsolationForest anomaly
-               detector, workload classifier, LSTM demand predictor
-training/      train_autoencoder.py, train_classifier.py, train_predictor.py
-inference/     end-to-end pipeline + SHAP/formula-based explainability
-services/      health_score.py, scheduler.py, cost_optimizer.py
-dashboards/    JSON payload builder for Grafana/React
-api/           FastAPI app (main.py) + pydantic schemas
-tests/         pytest smoke tests covering the full pipeline
-checkpoints/   saved scaler / embedder / anomaly detector / model weights
+cluster-heartbeat/
+│
+├── app/
+├── routes/
+├── models/
+├── services/
+├── utils/
+├── config/
+├── requirements.txt
+├── README.md
+└── ...
 ```
 
-## Setup
+---
+
+## 🚀 Getting Started
+
+### Clone the repository
+
+```bash
+git clone https://github.com/YOUR_USERNAME/cluster-heartbeat.git
+
+cd cluster-heartbeat
+```
+
+---
+
+### Create Virtual Environment
+
+```bash
+python -m venv venv
+```
+
+Activate it
+
+**Windows**
+
+```bash
+venv\Scripts\activate
+```
+
+**Linux / macOS**
+
+```bash
+source venv/bin/activate
+```
+
+---
+
+### Install Dependencies
 
 ```bash
 pip install -r requirements.txt
 ```
 
-## Quickstart
+---
+
+### Run the Project
 
 ```bash
-# 1. Generate synthetic DCGM/Prometheus-style data (or point data/ingestion.py at real data)
-python -m data.synthetic_generator
-
-# 2. Clean it
-python -m data.preprocessing
-
-# 3. Fit the feature scaler + PCA embedder + anomaly detector
-#    (fast, non-deep-learning path - good default)
-python -c "
-from pathlib import Path
-from config.settings import SETTINGS
-from data.ingestion import load_trace
-from features.windowing import make_windows
-from features.normalization import WindowScaler
-from models.pca_embedding import PCAEmbedder
-from models.anomaly_detector import EmbeddingAnomalyDetector
-
-df = load_trace(Path(SETTINGS['paths']['processed_data_dir']) / 'clean_trace.csv')
-windows, _, _ = make_windows(df)
-scaler = WindowScaler().fit(windows); scaler.save()
-scaled = scaler.transform(windows)
-emb = PCAEmbedder().fit(scaled); emb.save()
-z = emb.transform(scaled)
-EmbeddingAnomalyDetector().fit(z).save()
-"
-
-# 4. (Optional) Train the deep models instead of / in addition to PCA
-python -m training.train_autoencoder
-python -m training.train_classifier
-python -m training.train_predictor
-
-# 5. Run the API
-uvicorn api.main:app --reload --port 8000
+python app.py
 ```
 
-Then:
-```bash
-curl http://localhost:8000/health
-curl http://localhost:8000/dashboard/synthetic
-curl http://localhost:8000/explain/gpu-000
-```
-
-## Switching between PCA and Autoencoder embeddings
-
-By default `inference.pipeline.ClusterHeartbeatPipeline` uses the PCA
-embedder (fast, no GPU needed, easy to interpret). To use the trained
-autoencoder's latent space instead:
-
-```python
-pipeline = ClusterHeartbeatPipeline(use_autoencoder=True)
-```
-
-This requires `checkpoints/autoencoder.pt` to exist (run
-`python -m training.train_autoencoder` first).
-
-## Real data sources
-
-- **Alibaba Cluster Trace / Google Borg Trace**: map their columns onto
-  `utils.schema.ALL_COLUMNS` and load via `data.ingestion.FileIngestor`.
-- **Live Prometheus + DCGM exporter**: use `data.ingestion.PrometheusIngestor`,
-  which queries the standard `DCGM_FI_DEV_*` metric names via the Prometheus
-  HTTP range-query API. Configure `data.prometheus.base_url` in `config.yaml`.
-
-## Tests
+or
 
 ```bash
-pytest tests/ -v
+python main.py
 ```
 
-## Notes on this build
+(depending on your project entry point)
 
-- Storage format is CSV throughout for zero-dependency portability. If you
-  have `pyarrow` installed, swap `to_csv`/`read_csv` for `to_parquet`/`read_parquet`
-  in `data/synthetic_generator.py` and `data/ingestion.py` for smaller files.
-- The data pipeline, PCA embedding, anomaly detection, health scoring,
-  scheduling, cost optimization, and dashboard JSON were all executed
-  end-to-end against a real 32-GPU synthetic trace during development.
-- The PyTorch (autoencoder/classifier/LSTM) and FastAPI layers are
-  implemented against their standard, documented APIs but could not be
-  executed in the sandbox used to build this (no network access to
-  install `torch`/`fastapi`/`shap`). Install `requirements.txt` locally
-  and run `training/*.py` / `uvicorn api.main:app` to exercise them —
-  flag anything that errors and it's a quick fix.
+---
+
+## ⚙️ Configuration
+
+Update configuration files or environment variables before running the project.
+
+Example:
+
+```env
+HOST=127.0.0.1
+PORT=8000
+DEBUG=True
+```
+
+---
+
+## 🛠️ Technologies Used
+
+- Python
+- REST API
+- JSON
+- Virtual Environment
+- Git
+- GitHub
+
+(Add any framework you're using such as FastAPI, Flask, Django, SQLAlchemy, Redis, etc.)
+
+---
+
+## 📸 Screenshots
+
+Add screenshots here.
+
+Example:
+
+```
+screenshots/dashboard.png
+```
+
+---
+
+## 🎯 Future Improvements
+
+- Web Dashboard
+- Real-time Monitoring
+- Authentication
+- Docker Support
+- Kubernetes Deployment
+- Email Notifications
+- Metrics Visualization
+- Load Balancing Integration
+
+---
+
+## 🤝 Contributing
+
+Contributions are always welcome!
+
+1. Fork the repository
+
+2. Create your feature branch
+
+```bash
+git checkout -b feature/AmazingFeature
+```
+
+3. Commit your changes
+
+```bash
+git commit -m "Add AmazingFeature"
+```
+
+4. Push to the branch
+
+```bash
+git push origin feature/AmazingFeature
+```
+
+5. Open a Pull Request
+
+---
+
+## 📄 License
+
+This project is licensed under the MIT License.
+
+---
+
+## 👨‍💻 Author
+
+**Nahid Ibn Zaman**
+
+Software Engineering Student
+
+Daffodil International University
+
+GitHub: https://github.com/YOUR_USERNAME
+
+---
+
+## ⭐ Support
+
+If you found this project helpful, consider giving it a ⭐ on GitHub.
+
+It motivates me to build more open-source projects.
+
+---
+
+Made with ❤️ by Nahid Ibn Zaman
