@@ -1,0 +1,81 @@
+HEARTBEAT EXPLAINER - ADDITIONAL CHALLENGE TASK IMPLEMENTATION
+================================================================
+
+The project now includes a complete "Heartbeat Explainer" module that sits on top 
+of the existing heartbeat engine and fully meets the challenge requirements:
+
+### IMPLEMENTATION SUMMARY:
+
+1. **Shape View (New)**
+   - File: src/cluster_heartbeat/services/explainer.py
+   - Functions: _compute_shape_view(), _generate_sparkline_data()
+   - Shows healthy vs current metrics side-by-side for easy visual comparison
+   - Includes: GPU utilization, Memory, Power, GPU Health, Failure Risk
+   - Each metric shows change percentage and deviation from baseline
+
+2. **Key Movers (New)**
+   - File: src/cluster_heartbeat/services/explainer.py  
+   - Function: _compute_key_movers()
+   - Identifies top 3 metrics that changed most when heartbeat drifted
+   - Includes: impact score, direction (↑ or ↓), and one-sentence reason
+   - Ranked by impact score for easy prioritization
+
+3. **Suggested Actions (New)**
+   - File: src/cluster_heartbeat/services/explainer.py
+   - Function: _generate_suggested_actions_detailed()
+   - Provides ONE recommended action per drift type
+   - Each action includes:
+     * Priority level (1=urgent, 2=soon, 3=plan)
+     * Clear action statement
+     * Plain-English reasoning (one sentence)
+     * Affected nodes list
+     * Estimated time-to-failure when critical
+
+4. **Dashboard API Endpoint (New)**
+   - File: src/cluster_heartbeat/api/main.py
+   - Endpoint: GET /api/v1/explainer/dashboard
+   - Returns complete explainer report ready for rendering
+   - Includes all: shape_view, key_movers, suggested_actions, anomalies
+
+5. **Dashboard UI (Enhanced)**
+   - File: static/index.html
+   - Added "Heartbeat Explainer" section with:
+     * Shape View panel: side-by-side metric comparison visualization
+     * Key Movers panel: top 3 metrics that diverged from healthy baseline
+     * Suggested Actions panel: actionable recommendations with reasoning
+
+6. **Dashboard JavaScript (Enhanced)**
+   - File: static/app.js
+   - New functions: loadExplainerData(), renderExplainer()
+   - Fetches explainer data and renders UI with color-coded severity
+   - Includes metric sparklines, impact scores, and action priorities
+
+### FEATURES:
+
+✓ Shape View: Healthy vs Current metrics shown side-by-side
+✓ Key Movers: Top 3 metrics identified with impact scoring
+✓ Suggested Actions: One action per drift with transparent reasoning  
+✓ Dashboard Integration: Live data pulled and rendered on dashboard
+✓ Simulated Telemetry: Works with synthetic data (data/synthetic/)
+✓ Color Coding: Severity indicators (critical, warning, healthy)
+✓ Responsive Design: Works on desktop and mobile dashboards
+
+### RUNNING THE PROJECT:
+
+1. Extract cluster-heartbeat-enhanced.zip
+2. Install dependencies: pip install -r requirements.txt
+3. Start API: python scripts/serve.py --ckpt checkpoints/best --data data/synthetic
+4. Open dashboard: http://localhost:8000/dashboard
+5. Check "Heartbeat Explainer" section to see:
+   - Shape view of healthy vs current metrics
+   - Key movers (metrics that drifted most)
+   - Suggested actions with one-sentence reasoning
+
+### API ENDPOINTS:
+
+- GET /api/v1/explainer/cluster       — Detailed cluster explanation
+- GET /api/v1/explainer/dashboard     — Dashboard-ready explainer data
+- GET /api/v1/explainer/node/{id}     — Single node explanation
+
+All endpoints return JSON ready for immediate visualization.
+
