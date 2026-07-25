@@ -1,0 +1,22 @@
+{
+  "node_002": {
+    "failure_step": 548,
+    "type": "thermal_runaway"
+  },
+  "node_003": {
+    "failure_step": 391,
+    "type": "thermal_runaway"
+  },
+  "node_006": {
+    "failure_step": 426,
+    "type": "thermal_runaway"
+  },
+  "node_010": {
+    "failure_step": 603,
+    "type": "thermal_runaway"
+  },
+  "node_011": {
+    "failure_step": 405,
+    "type": "ecc_burst"
+  }
+}

@@ -1,0 +1,9 @@
+[
+  "tests/test_smoke.py::test_api_health_and_report",
+  "tests/test_smoke.py::test_api_inference_validation",
+  "tests/test_smoke.py::test_api_recommendations_and_fingerprint",
+  "tests/test_smoke.py::test_delta_channels",
+  "tests/test_smoke.py::test_model_forward",
+  "tests/test_smoke.py::test_score_bounds_and_aggregation",
+  "tests/test_smoke.py::test_window_shapes"
+]
