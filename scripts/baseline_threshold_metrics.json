@@ -1,0 +1,38 @@
+{
+  "backend": "threshold_baseline",
+  "k": 3.0,
+  "per_feature_threshold": {
+    "gpu_utilization": 143.78765869140625,
+    "memory_utilization": 124.48625183105469,
+    "gpu_temperature": 96.23602294921875,
+    "power_consumption": 548.517822265625,
+    "ecc_errors": 0.30232712626457214,
+    "xid_errors": 6.004985809326172,
+    "cpu_usage": 94.44224548339844,
+    "ram_usage": 99.73899841308594,
+    "network_throughput": 850.0303955078125,
+    "disk_io": 423.31268310546875,
+    "job_runtime": 227.6332550048828,
+    "queue_length": 8.461509704589844,
+    "active_processes": 4.901298999786377
+  },
+  "n_val_windows": 409,
+  "n_val_nodes": 4,
+  "anomaly": {
+    "auroc": 0.7148351648351647,
+    "best": {
+      "f1": 0.36666666666666664,
+      "threshold": 0.1,
+      "precision": 0.7333333333333333,
+      "recall": 0.24444444444444444
+    }
+  },
+  "predictive_lead_time_hours": {
+    "mean": 1.4277777777777778,
+    "per_node": {
+      "node_006": 0.2,
+      "node_010": 0.23333333333333334,
+      "node_011": 3.85
+    }
+  }
+}
