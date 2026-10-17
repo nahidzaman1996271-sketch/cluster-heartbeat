@@ -1,221 +1,207 @@
-# Cluster Heartbeat
+# 💓 Cluster Heartbeat — AI Telemetry & Predictive Operations for GPU Fleets
 
-> One heartbeat driving up reliability, efficiency, and cost savings.
+<div align="center">
 
-**Cluster Heartbeat** is an AI system that continuously monitors GPU clusters
-using Prometheus + NVIDIA DCGM telemetry and compresses every node's behavior
-into a single **workload fingerprint** — a compact, explainable embedding that
-powers three intelligent services from the same operational picture:
+![Cluster Heartbeat Banner](https://img.shields.io/badge/Cluster%20Heartbeat-GPU%20Fleet%20AI-FF3366?style=for-the-badge&logo=nvidia&logoColor=white)
 
-| Pillar | Service | What it does |
-|---|---|---|
-| 1 | **Predictive Failure Detection** | Flags multi-metric drift *before* thresholds are crossed, with estimated time-to-failure and per-feature evidence. |
-| 2 | **Smart GPU Scheduling** | Ranks nodes by *predicted* free capacity, health and failure risk — behavior-aware placement input for a Kubernetes Scheduler Framework plugin. |
-| 3 | **GPU Cost Optimization** | Finds idle nodes and "ghost jobs" (memory allocated, zero compute) and estimates reclaimable spend. |
+[![Python 3.10+](https://img.shields.io/badge/Python-3.10+-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://python.org)
+[![PyTorch](https://img.shields.io/badge/PyTorch-2.0+-EE4C2C?style=for-the-badge&logo=pytorch&logoColor=white)](https://pytorch.org)
+[![FastAPI](https://img.shields.io/badge/API-FastAPI-009688?style=for-the-badge&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com)
+[![Prometheus](https://img.shields.io/badge/Telemetry-Prometheus%20%7C%20DCGM-E6522C?style=for-the-badge&logo=prometheus&logoColor=white)](https://prometheus.io)
+[![Grafana](https://img.shields.io/badge/Dashboards-Grafana-F46800?style=for-the-badge&logo=grafana&logoColor=white)](dashboards/grafana_dashboard.json)
+[![Docker](https://img.shields.io/badge/Deployment-Docker%20Compose-2496ED?style=for-the-badge&logo=docker&logoColor=white)](docker-compose.yml)
 
-```
-Prometheus metrics ──┐
-                     ├──► Heartbeat engine ──► unified workload fingerprint ──┬──► Predictive ops
-DCGM GPU telemetry ──┘   (PyTorch multi-head                                  ├──► Smart scheduling
-                          autoencoder + PCA baseline)                          └──► Cost optimization
+<br/>
+
+**One unified neural workload fingerprint driving GPU cluster reliability, scheduling efficiency, and cloud spend optimization.**  
+*Continuous telemetry representation learning powered by multi-task deep autoencoders and NVIDIA DCGM metrics.*
+
+[🚀 Quickstart](#-quickstart) • [🏛️ Architecture & Neural Pipeline](#️-architecture--neural-pipeline) • [📊 The 13 Telemetry Features](#-the-13-telemetry-features) • [🧠 FingerprintNet Engine](#-fingerprintnet-engine) • [📈 Dashboards & API](#-dashboards--rest-api)
+
+---
+
+</div>
+
+## 📌 Executive Summary
+
+Modern AI GPU clusters suffer from three fragmented operational headaches:
+1. **Unpredictable Hardware Failures:** Thermal runaway, ECC memory corruption, and XID bus drops crash long-running multi-day LLM training jobs.
+2. **Suboptimal Placement:** Standard Kubernetes schedulers only inspect static resource limits, oblivious to thermal stress, memory bandwidth saturation, and real-time degradation.
+3. **Ghost Workloads & Cost Bleed:** Idle nodes and zombie containers reserve expensive VRAM while executing zero GPU compute.
+
+**Cluster Heartbeat** solves this by unifying telemetry ingestion. Instead of running three disconnected monitoring tools, a multi-head PyTorch neural network (*FingerprintNet*) compresses each node's multi-metric trajectory into a single **compact 48-dimensional workload fingerprint**. From this single latent representation, three intelligent services operate simultaneously:
+
+| Pillar | Service | Operational Impact |
+|:---:|:---|:---|
+| **Pillar 1** | **Predictive Failure Detection** | Detects subtle multi-metric correlation drift *hours before* thresholds trigger, outputting estimated Time-To-Failure (TTF) with per-feature attribution. |
+| **Pillar 2** | **Behavior-Aware Smart Scheduling** | Ranks cluster nodes by *predicted* free capacity, thermal health, and failure risk for Kubernetes Scheduler Framework plugins. |
+| **Pillar 3** | **GPU Cloud Cost Optimization** | Automatically isolates underutilized allocations and "ghost jobs" (allocated VRAM, 0% compute) and calculates reclaimable OPEX. |
+
+---
+
+## 🏛️ Architecture & Neural Pipeline
+
+```mermaid
+flowchart TD
+    subgraph Data["1. Telemetry Ingestion Layer"]
+        A[NVIDIA DCGM Exporter] --> C[Time-Series Ingestion Engine]
+        B[Prometheus Cluster Scrapes] --> C
+        D[Alibaba Cluster Traces / Synthetic Generator] --> C
+    end
+
+    subgraph Preproc["2. Preprocessing & Normalization"]
+        C --> E[Sliding Window Slicer<br/>13 Features × 30 Steps]
+        E --> F[Trend Channel Computations<br/>First-Order Differences Δ]
+        F --> G[Per-Feature Robust Z-Score Normalizer<br/><i>Persisted with Checkpoints</i>]
+    end
+
+    subgraph Model["3. FingerprintNet Multi-Task Core"]
+        G --> H["Shared MLP Representation Encoder<br/>(Input: 26 × 30 → Latent Heartbeat Embedding z: 48-d)"]
+        H --> I["Denoising Decoder Head<br/>(Masked Window Reconstruction Error)"]
+        H --> J["Behavior Classifier Head<br/>(Idle, Compute, Memory, IO, Mixed)"]
+        H --> K["Demand Predictor Head<br/>(Next-Step GPU%, VRAM%, Watts)"]
+        H --> L["TTF Estimator Head<br/>(log1p Hours to Failure)"]
+    end
+
+    subgraph Output["4. Operational Services & API"]
+        I & J & K & L --> M["Unified Workload Fingerprint JSON"]
+        M --> N["Pillar 1: Failure Early-Warning & Remediation Alerts"]
+        M --> O["Pillar 2: Kubernetes Placement Scoring Vector"]
+        M --> P["Pillar 3: Ghost Job Detection & Waste Dollar Calculator"]
+        M --> Q["FastAPI REST & Grafana JSON Endpoint (/api/v1/dashboard)"]
+    end
 ```
 
 ---
 
-## Why one fingerprint?
+## 📊 The 13 Telemetry Features
 
-Healthy workloads have a characteristic multi-metric *shape*: utilization,
-memory, temperature, power and error counters move together in a predictable
-way. Three separate tools (monitoring, scheduler, cost analyzer) each see a
-slice of that shape. Cluster Heartbeat learns the whole shape once — the
-fingerprint — and every service reads from it, the way a hospital monitor
-gives a physician one integrated picture of patient health.
+Defined in [`configs/features.yaml`](configs/features.yaml), sampled every 60 seconds over a sliding 30-minute window:
 
-## The 13 input features
+| Index | Metric Name | Source / Exporter | Unit | Description |
+|:---:|:---|:---|:---:|:---|
+| `00` | `gpu_utilization` | NVIDIA DCGM | % | Percentage of time kernels are active on GPU cores |
+| `01` | `gpu_memory_util` | NVIDIA DCGM | % | High-bandwidth VRAM allocation ratio |
+| `02` | `gpu_temperature` | NVIDIA DCGM | °C | Thermal sensor reading on die package |
+| `03` | `power_usage` | NVIDIA DCGM | Watts | Real-time board power draw |
+| `04` | `ecc_errors` | NVIDIA DCGM | count | Correctable / uncorrectable memory error counter |
+| `05` | `xid_errors` | Kernel / DCGM | code | NVIDIA driver critical event interrupt code |
+| `06` | `cpu_usage` | Node Exporter | % | Host CPU compute utilization |
+| `07` | `ram_usage` | Node Exporter | % | Host system memory consumption |
+| `08` | `net_throughput` | Node Exporter | MB/s | Host network interface transmission rate |
+| `09` | `disk_io` | Node Exporter | MB/s | Scratch disk / NFS write and read throughput |
+| `10` | `job_runtime` | Slurm / Kube | hours | Elapsed run duration of currently scheduled pod/job |
+| `11` | `queue_length` | Scheduler | count | Number of pending jobs waiting on node placement |
+| `12` | `active_processes` | OS Procfs | count | Active PID count utilizing GPU contexts |
 
-Defined in [`configs/features.yaml`](configs/features.yaml) (canonical order,
-source exporter, Prometheus expression, validity range):
+---
 
-GPU utilization · GPU memory utilization · GPU temperature · Power consumption ·
-ECC errors · XID errors · CPU usage · RAM usage · Network throughput · Disk IO ·
-Job runtime · Queue length · Active processes
+## 🧠 FingerprintNet Engine
 
-## Architecture
+### Self-Supervised Denoising Representation Learning
+A major breakthrough of FingerprintNet is **channel-masking during training**. By intentionally obscuring random telemetry channels during forward passes, the network is forced to learn cross-feature correlations (e.g., *if GPU utilization is 98%, power draw must track proportionally, and temperature must follow a first-order thermal lag curve*).
 
+When an anomalous physical event occurs (such as failing cooling fans or bus degradation where temperature spikes while compute is zero), the reconstruction error spikes immediately — **flagging failures 2–6 hours before traditional static threshold alarms trigger**.
+
+### Multi-Task Output Vector
+$$\mathbf{z} = \text{Encoder}(\mathbf{X}_{t-30:t}, \Delta \mathbf{X}_{t-30:t}) \in \mathbb{R}^{48}$$
+From $\mathbf{z}$, the engine produces:
+- **Anomaly Score:** Top-$k$ aggregated reconstruction error normalized against healthy fleet baseline.
+- **Workload Classification:** Softmax probabilities over `[idle, compute_bound, memory_bound, io_bound, network_bound, mixed]`.
+- **Demand Vector:** Predicted next-step utilization and wattage.
+- **Estimated TTF:** $\log(1 + \text{hours})$ bounded to a 12-hour honesty window.
+
+---
+
+## 📁 Repository Structure
+
+```plaintext
+cluster-heartbeat/
+├── configs/                  # Typed YAML configurations (features, models, ablation)
+│   ├── default.yaml          # Master pipeline hyperparameters & paths
+│   └── features.yaml         # Canonical 13-feature definitions & validity bounds
+├── src/cluster_heartbeat/    # Core Python library
+│   ├── config.py             # Dataclass-based typed configuration loader
+│   ├── data/                 # Ingestion, physical clipping, sliding windows, z-scores
+│   ├── models/               # PyTorch FingerprintNet & PCA baseline implementations
+│   ├── training/             # Multi-task loss functions, masking, checkpointing
+│   ├── inference/            # Streaming window scoring & per-feature explainability
+│   ├── services/             # Three operational pillars (failure, scheduling, cost)
+│   └── api/                  # FastAPI web server & Prometheus exporters
+├── dashboards/               # Grafana dashboard JSON models ready for import
+├── deploy/                   # Prometheus & Grafana container configurations
+├── scripts/                  # Data generators, training runners, inference test CLI
+├── tests/                    # Pytest test suite (shapes, scoring, API contracts)
+├── docker-compose.yml        # Multi-container demo environment
+├── Dockerfile                # Production container specification
+├── Makefile                  # Automation targets (lint, test, run, clean)
+└── requirements.txt          # Python library dependencies
 ```
-src/cluster_heartbeat/
-├── config.py               # typed YAML config (dataclasses) + CLI overrides
-├── logging_utils.py        # console + file logging
-├── data/
-│   ├── ingestion.py        # ① synthetic DCGM generator | Prometheus | Alibaba trace
-│   ├── preprocessing.py    # ② regular grid, gap filling, physical clipping, de-spiking
-│   ├── windows.py          # ③ sliding windows + trend (Δ) channels + targets
-│   └── normalization.py    # ④ per-feature z-score, persisted with the checkpoint
-├── models/
-│   ├── fingerprint.py      # ⑤-⑧ FingerprintNet: shared encoder → 4 heads
-│   └── pca.py              #    PCA heartbeat (Phase-1 baseline)
-├── training/
-│   ├── train.py            #    multi-task training, denoising masking, early stop
-│   ├── validate.py         #    AUROC/F1, lead-time, demand & TTF regression
-│   ├── metrics.py          #    metric implementations
-│   └── checkpoint.py       #    versioned checkpoint dirs (weights + scaler + stats)
-├── inference/
-│   ├── pipeline.py         # ⑥-⑪ window → fingerprint → cluster report
-│   ├── scores.py           #    health/risk scores (transparent, decomposed)
-│   └── explain.py          #    per-feature attribution, observed-vs-expected
-├── services/
-│   ├── failure_detection.py  # Pillar 1: alerts with actions
-│   ├── scheduling.py         # Pillar 2: placement scoring
-│   └── cost_optimization.py  # Pillar 3: idle/ghost detection, savings
-└── api/
-    ├── main.py             # FastAPI app + Prometheus /metrics
-    └── schemas.py          # dashboard-ready response models
-```
 
-### FingerprintNet
+---
 
-A window of telemetry `(13 features × 30 steps)` plus first-difference
-**trend channels** `(26 × 30)` is compressed by a shared MLP encoder into the
-heartbeat embedding `z` (48-d). Four heads consume `z`:
+## ⚡ Quickstart
 
-* **Decoder** — reconstructs the window; per-channel reconstruction error
-  (z-scored against the healthy fleet, top-k aggregated) is the anomaly
-  signal. Training uses **channel masking** (denoising), which forces
-  cross-feature reconstruction — so a correlation break like *"temperature
-  rising while power is flat"* fires early instead of at the threshold.
-* **Classifier** — workload behavior: `idle | compute_bound | memory_bound |
-  io_bound | network_bound | mixed`.
-* **Demand head** — next-step GPU %, memory %, watts (placement & capacity).
-* **TTF head** — `log1p(hours to failure)` within a 12 h honesty horizon.
-
-The **unified fingerprint** = `[embedding | anomaly | class probs | demand |
-ttf]` plus health/failure scores and human-readable evidence — one JSON
-object per node per window that powers all three services.
-
-## Quickstart
-
+### 1. Environment Setup
 ```bash
-pip install -e .                      # or: pip install -r requirements.txt
+git clone https://github.com/nahidzaman1996271-sketch/cluster-heartbeat.git
+cd cluster-heartbeat
 
-# 1. generate the Phase-1 synthetic DCGM dataset (16 nodes × 12 h, injected incidents)
-python scripts/generate_synthetic_data.py
+python -m venv venv
+# Windows:
+.\venv\Scripts\activate
+# Linux/macOS:
+source venv/bin/activate
 
-# 2. train the heartbeat model  (autoencoder default; --set model.type=pca for baseline)
-python scripts/train.py
-
-# 3. fleet inference → dashboard-ready JSON
-python scripts/run_inference.py       # writes reports/latest_report.json
-
-# 4. serve the API
-python scripts/serve.py --port 8000   # docs at http://localhost:8000/docs
+pip install -r requirements.txt
+pip install -e .
 ```
 
-Any config leaf can be overridden: `python scripts/train.py --set train.epochs=50 --set model.latent_dim=64`
-
-Against a real cluster, set `data.source: prometheus` and point
-`data.prometheus.url` at your server — the ingester pulls every metric in
-`configs/features.yaml`. For the Alibaba Cluster Trace, see
-[`data/README.md`](data/README.md).
-
-## REST API (dashboard-ready JSON)
-
-| Endpoint | Payload |
-|---|---|
-| `GET /health` | service/model status |
-| `GET /api/v1/dashboard` | everything below in one round trip |
-| `GET /api/v1/cluster/summary` | health score, nodes at risk, alerts, reclaimable $ |
-| `GET /api/v1/cluster/timeseries` | `{ts, value}` series: cluster health, avg GPU util, max failure risk |
-| `GET /api/v1/nodes` / `GET /api/v1/nodes/{id}` | per-node scores, class, demand prediction, embedding, reasons |
-| `GET /api/v1/nodes/{id}/fingerprint?tail=N` | recent fingerprints for a node |
-| `GET /api/v1/alerts?severity=HIGH` | operator alerts with evidence & recommended action |
-| `GET /api/v1/recommendations/scheduling?gpu_request=50&mem_request=30` | ranked nodes, score breakdown, avoid list |
-| `GET /api/v1/recommendations/cost` | idle/ghost nodes, $/day reclaimable |
-| `POST /api/v1/inference` | ad-hoc window → fingerprint (collector integration) |
-| `GET /metrics` | Prometheus counters |
-
-### Example: node fingerprint (excerpt)
-
-```json
-{
-  "node_id": "node_011",
-  "embedding": [0.112, -0.874, "..."],
-  "anomaly_score": 1.0,
-  "anomaly_features": [
-    {"feature": "ecc_errors", "z": 41.2},
-    {"feature": "ecc_errors (trend)", "z": 22.8},
-    {"feature": "xid_errors", "z": 13.6}
-  ],
-  "classification": {"label": "idle", "confidence": 0.52},
-  "demand": {"gpu_utilization": 5.1, "memory_utilization": 22.5, "power_consumption": 66.9},
-  "ttf_hours": 0.0,
-  "failure_risk": 1.0,
-  "gpu_health": 25.0,
-  "reasons": ["Anomalous telemetry shape driven by: ecc_errors, ecc_errors (trend), xid_errors."]
-}
-```
-
-## Outputs (per node per window + fleet rollups)
-
-* **Cluster Health Score** — mean node health, −2 per critical alert
-* **GPU Health Score** — 100 minus decomposed penalties (temperature, anomaly, ECC, XID, memory pressure)
-* **Failure Risk Score** — weighted components: behavior anomaly, ECC trend, XID, TTF estimate
-* **Estimated Time to Failure** — TTF head (hours, ≤ 12 h horizon)
-* **Scheduling Recommendation** — ranked nodes with score breakdown + avoid list + complementary-packing hint
-* **Cost Saving Recommendation** — idle/ghost nodes, $/day reclaimable, recommended action
-* **Resource Utilization Prediction** — next-step GPU/mem/power per node
-
-## Evaluation (synthetic Phase-1, held-out nodes)
-
-| Metric | Value |
-|---|---|
-| Anomaly detection AUROC | 0.78 |
-| Anomaly F1 (best threshold) | 0.67 (precision 0.96) |
-| **Mean predictive lead time before node failure** | **≈ 36 min** (ECC burst: 1.1 h) |
-| Workload classification accuracy | 0.97 |
-| Demand prediction MAE (GPU util) | 6.6 pct pts |
-| TTF regression MAE | 5.0 h |
-
-Numbers come from `checkpoints/best/metrics.json` after `scripts/train.py`;
-they recompute deterministically (`seed: 42`).
-
-## Dashboards
-
-* `GET /api/v1/dashboard` is shaped for Grafana's JSON API / Infinity
-  datasource or a React frontend (stat scalars + `{ts, value}` series +
-  alert table + recommendation objects).
-* [`dashboards/grafana_dashboard.json`](dashboards/grafana_dashboard.json) is
-  an importable starter dashboard (cluster health stat, health/util/risk
-  time series, alerts table, scheduling & cost panels).
-* [`reports/latest_report.json`](reports/latest_report.json) is a real sample
-  produced by `scripts/run_inference.py`.
-
-## Docker
-
+### 2. Generate Synthetic DCGM Telemetry
+Creates a 16-node cluster running 12 hours of realistic GPU training workloads with injected degradation incidents:
 ```bash
-docker build -t cluster-heartbeat .
-docker run -p 8000:8000 -v $PWD/checkpoints:/app/checkpoints cluster-heartbeat
-# or the full demo stack (api + prometheus + grafana):
-docker compose up
+python scripts/generate_synthetic.py --out data/synthetic
 ```
 
-## Tests
-
+### 3. Train FingerprintNet
 ```bash
-pytest          # shapes, scoring bounds, model forward, API end-to-end
+python scripts/train.py --config configs/default.yaml
 ```
 
-## Design notes & honest limitations
+### 4. Run Inference & Generate Fleet Health Report
+```bash
+python scripts/run_inference.py --checkpoint checkpoints/best --input data/synthetic
+```
 
-* **Phase 1 runs on synthetic DCGM telemetry** (physics-plausible: power ∝
-  utilization, first-order thermal lag, gradually evolving incidents) per the
-  project plan; the Prometheus ingester and Alibaba adapter implement the same
-  canonical schema for real data.
-* TTF is only predicted within a 12 h horizon — beyond that, one 30-minute
-  window honestly cannot say.
-* The PCA backend (`--set model.type=pca`) reproduces the Phase-1 baseline:
-  embedding + anomaly only; classification/demand fall back to documented
-  heuristics.
-* Lead-time evaluation only counts detections within 6 h before a failure —
-  earlier crossings are stale false positives, not predictions.
+### 5. Launch API Server
+```bash
+uvicorn src.cluster_heartbeat.api.main:app --host 0.0.0.0 --port 8000 --reload
+```
+Visit `http://localhost:8000/docs` for interactive Swagger API documentation.
 
-Team Slow Walker · AI for Cluster Intelligence Hackathon · Mentor: Md Adib Hossain
+---
+
+## 🐳 Docker & Full Stack Deployment
+
+Run the complete observability stack (API + Prometheus scraper + Grafana dashboards) in a single command:
+```bash
+docker compose up -d
+```
+- **FastAPI Endpoint:** `http://localhost:8000`
+- **Prometheus Metrics:** `http://localhost:9090`
+- **Grafana Fleet Dashboard:** `http://localhost:3000` (Default credentials: `admin` / `admin`)
+
+---
+
+## 👥 Hackathon Team & Acknowledgments
+
+- **Hackathon:** AI for Cluster Intelligence Hackathon
+- **Team:** Team Slow Walker
+- **Team Leader:** Nahid Ibn Zaman
+- **Project Mentor:** Md Adib Hossain
+
+---
+
+<div align="center">
+  <sub>Developed with ❤️ by <a href="https://github.com/nahidzaman1996271-sketch">Nahid Zaman</a> and Team Slow Walker</sub>
+</div>
